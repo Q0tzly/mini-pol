@@ -1,0 +1,15 @@
+// Fizz Buzz //
+
+fizz_buzz |i: int| : str =
+	if (& = 0 % i 3 = 0 % i 5) "Fizz Buzz"
+	(= 0 % i 3) "Fizz"
+	(= 0 % i 5) "Buzz"
+	el str i
+
+fizz_buzz_loop |i: int| :=
+	if (> i 1) {
+		outln fizz_buzz i,
+		fizz_buzz_loop - i 1
+	}
+
+main := fizz_buzz 100

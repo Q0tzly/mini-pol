@@ -77,24 +77,28 @@ impl Tokenizer {
                 continue;
             }
 
-            let t_type = if Self::is_keyword(token_str) {
-                TokenType::Keyword
-            } else if Self::is_literal(token_str) {
-                TokenType::Literal
-            } else if Self::is_identifier(token_str) {
-                TokenType::Identifier
-            } else if self.is_operator(token_str) {
-                TokenType::Operator
-            } else if Self::is_delimiter(token_str) {
-                TokenType::Delimiter
-            } else {
-                TokenType::Error
-            };
+            let token_strs = token_str.split_whitespace();
 
-            self.tokens.push(Token {
-                token_type: t_type,
-                data: token_str.to_string(),
-            });
+            for token_str in token_strs {
+                let t_type = if Self::is_keyword(token_str) {
+                    TokenType::Keyword
+                } else if Self::is_literal(token_str) {
+                    TokenType::Literal
+                } else if Self::is_identifier(token_str) {
+                    TokenType::Identifier
+                } else if self.is_operator(token_str) {
+                    TokenType::Operator
+                } else if Self::is_delimiter(token_str) {
+                    TokenType::Delimiter
+                } else {
+                    TokenType::Error
+                };
+
+                self.tokens.push(Token {
+                    token_type: t_type,
+                    data: token_str.to_string(),
+                });
+            }
         }
     }
 
@@ -160,7 +164,7 @@ mod tests {
 
     #[test]
     fn test_lexer() {
-        let input = "// Hello World\nmain := outln \"Hello World\"".to_string();
+        let input = "// Hello\" World\nmain :=\noutln \"Hello World\"".to_string();
         let mut tokenizer = Tokenizer::new(&input);
         tokenizer.tokenize();
 
